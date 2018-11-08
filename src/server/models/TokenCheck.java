@@ -4,17 +4,34 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
-public class Admin {
+public class TokenCheck {
     private String username;
     private String password;
-    private String sessionToken;
+    private String sessiontoken;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Get IntelliJ to auto-generate a constructor, getter and setters here:
 
-    public Admin(String username, String password, String sessionToken) {
+    public TokenCheck(String username, String password, String sessiontoken) {
         this.username = username;
         this.password = password;
-        this.sessionToken = sessionToken;
+        this.sessiontoken = sessiontoken;
+    }
+
+    public TokenCheck() {
+
     }
 
     public String getUsername() {
@@ -33,24 +50,31 @@ public class Admin {
         this.password = password;
     }
 
-    public String getSessionToken() {
-        return sessionToken;
+    public String getSessiontoken() {
+        return sessiontoken;
     }
 
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
+    public void setSessiontoken(String sessiontoken) {
+        this.sessiontoken = sessiontoken;
     }
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    public static ArrayList<TokenCheck> tokenchecks = new ArrayList<>();
 
-    public static ArrayList<Admin> admins = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     public JSONObject toJSON() {
         JSONObject j = new JSONObject();
         j.put("username", getUsername());
         j.put("password", getPassword());
-        j.put("sessionToken", getSessionToken());
+        j.put("sessiontoken", getSessiontoken());
+
+
+
+
+
+
+
 
 
 

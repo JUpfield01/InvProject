@@ -2,34 +2,33 @@ package server.models.services;
 
 import server.Logger;
 import server.DatabaseConnection;
-import server.models.Admin;
+import server.models.TokenCheck;
 
-import javax.ws.rs.core.Cookie;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AdminService {
+public class TokenCheckService {
 
-    public static String selectAllInto(List<Admin> targetList) {
+    public static String selectAllInto(List<TokenCheck> targetList) {
         targetList.clear();
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT Username, Password, SessionToken FROM Admins"
+                    "SELECT Username, Password, SessionToken FROM TokenChecker"
             );
             if (statement != null) {
                 ResultSet results = statement.executeQuery();
                 if (results != null) {
                     while (results.next()) {
-                        targetList.add(new Admin(results.getString("Username"), results.getString("Password"), results.getString("SessionToken")));
+                        targetList.add(new TokenCheck());
 
 
                     }
                 }
             }
         } catch (SQLException resultsException) {
-            String error = "Database error - can't select all from 'Admins' table: " + resultsException.getMessage();
+            String error = "Database error - can't select all from 'TokenChecker' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
@@ -37,46 +36,46 @@ public class AdminService {
         return "OK";
     }
 
-    public static Admin selectById(int id) {
-        Admin result = null;
+    public static TokenCheck selectById(int id) {
+        TokenCheck result = null;
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT Username, Password, SessionToken FROM Admins WHERE Username = ?"
+                    "SELECT Username, Password, SessionToken FROM TokenChecker WHERE Username = ?"
             );
             if (statement != null) {
                 statement.setInt(1, id);
                 ResultSet results = statement.executeQuery();
                 if (results != null && results.next()) {
-                    result = new Admin(results.getString("Username"), results.getString("Password"), results.getString("SessionToken"));
+                    result = new TokenCheck();
 
 
                 }
             }
         } catch (SQLException resultsException) {
-            String error = "Database error - can't select by id from 'Admins' table: " + resultsException.getMessage();
+            String error = "Database error - can't select by id from 'TokenChecker' table: " + resultsException.getMessage();
 
             Logger.log(error);
         }
         return result;
     }
 
-    public static String update(Admin itemToSave) {
+
+    public static String update(TokenCheck itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "UPDATE Admins SET Password = ?, SessionToken = ? WHERE Username = ?"
+                    "UPDATE TokenChecker SET  WHERE "
             );
-            statement.setString(1, itemToSave.getPassword());
-            statement.setString(2, itemToSave.getSessionToken());
-
+            statement.setString(2, itemToSave.getSessiontoken());
             statement.setString(3, itemToSave.getUsername());
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't update 'Admins' table: " + resultsException.getMessage();
+            String error = "Database error - can't update 'TokenChecker' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
         }
     }
+
 
 }
