@@ -72,14 +72,6 @@ public class ProductService {
             statement.setFloat(6, itemToSave.getProductcost());
             statement.setInt(7, itemToSave.getQuantity());
             statement.setString(8, itemToSave.getImageurl());
-
-
-
-
-
-
-
-
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
