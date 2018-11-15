@@ -13,28 +13,31 @@ import javax.ws.rs.core.MediaType;
 import java.io.Console;
 
 @SuppressWarnings("unchecked")
-@Path("console/")
-public class InventoryController {
+@Path("product/")
+public class ProductController {
 
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listConsoles() {
+    public String listProducts() {
 
-        Logger.log("/console/list - Getting all consoles from database");
+        Logger.log("/product/list - Getting all products from database");
         String status = ProductService.selectAllInto(Product.products);
 
         if (status.equals("OK")) {
 
-            JSONObject response = new JSONObject();
+            JSONArray productList = new JSONArray();
+            for (Product c: Product.products) {
 
-            Console c = ConsoleService.selectById(id);
-            response.put("consoleName", c.getName());
+                JSONObject jc = c.toJSON();
 
+                productList.add(jc);
 
+            }
 
+            return productList.toString();
 
-
+        } else {
             JSONObject response = new JSONObject();
             response.put("error", status);
             return response.toString();
@@ -42,4 +45,4 @@ public class InventoryController {
 
     }
 
-
+}
