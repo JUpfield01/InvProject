@@ -14,14 +14,6 @@ public class Product {
     private int quantity;
     private String imageurl;
 
-
-
-
-
-
-
-
-
     // Get IntelliJ to auto-generate a constructor, getter and setters here:
 
     public Product(int productid, int inventoryid, int salesid, String productname, String productdescription, float productcost, int quantity, String imageurl) {
