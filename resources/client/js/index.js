@@ -22,15 +22,14 @@ function updateProductList() {
 
                 for (let product of productList) {
                     productsHTML += `<div class="row mb-2">`
-                        + `<div class="col-3">${product.productname}</div>`
-                        + `<div class="col-2">${product.productdescription}</div>`
-                        + `<div class="col-1">${product.productcost}</div>`
+                        + `<div class="col-3">${product.productName}</div>`
+                        + `<div class="col-2">${product.productDescription}</div>`
+                        + `<div class="col-1">${product.productCost}</div>`
                         + `<div class="col-2"><a href="${product.imageURL}" target=”_blank”><img width="120" height="90" src="${product.imageURL}"></a></div>`
                         + `<div class="col-3 text-right">`
                         + `<a class="btn btn-sm btn-info mr-2"  href="/client/games.html?id=${product.id}">Games</a>`
                         + `<a class="btn btn-sm btn-info mr-2"  href="/client/accessories.html?id=${product.id}">Accessories</a>`
                         + `<a class="btn btn-sm btn-success"  href="/client/editconsole.html?id=${product.id}">Edit</a>`
-                        +`</div>`
                         + `</div>`;
                 }
                 productsHTML += `</div>`;

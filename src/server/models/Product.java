@@ -27,10 +27,6 @@ public class Product {
         this.imageurl = imageurl;
     }
 
-    public Product() {
-
-    }
-
     public int getProductid() {
         return productid;
     }

@@ -29,6 +29,14 @@ public class ProductController {
             JSONArray productList = new JSONArray();
             for (Product c: Product.products) {
 
+                System.out.println(c.getProductid());
+                System.out.println(c.getImageurl());
+                System.out.println(c.getInventoryid());
+                System.out.println(c.getProductcost());
+                System.out.println(c.getProductdescription());
+                System.out.println(c.getQuantity());
+                System.out.println(c.getSalesid());
+
                 JSONObject jc = c.toJSON();
 
                 productList.add(jc);
