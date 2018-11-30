@@ -7,16 +7,14 @@ import java.util.ArrayList;
 public class Product {
     private int productid;
     private int inventoryid;
-    private int salesid;
+    private String salesid;
     private String productname;
     private String productdescription;
-    private float productcost;
-    private int quantity;
+    private String productcost;
+    private String quantity;
     private String imageurl;
 
-    // Get IntelliJ to auto-generate a constructor, getter and setters here:
-
-    public Product(int productid, int inventoryid, int salesid, String productname, String productdescription, float productcost, int quantity, String imageurl) {
+    public Product(int productid, int inventoryid, String salesid, String productname, String productdescription, String productcost, String quantity, String imageurl) {
         this.productid = productid;
         this.inventoryid = inventoryid;
         this.salesid = salesid;
@@ -43,11 +41,11 @@ public class Product {
         this.inventoryid = inventoryid;
     }
 
-    public int getSalesid() {
+    public String getSalesid() {
         return salesid;
     }
 
-    public void setSalesid(int salesid) {
+    public void setSalesid(String salesid) {
         this.salesid = salesid;
     }
 
@@ -67,19 +65,19 @@ public class Product {
         this.productdescription = productdescription;
     }
 
-    public float getProductcost() {
+    public String getProductcost() {
         return productcost;
     }
 
-    public void setProductcost(float productcost) {
+    public void setProductcost(String productcost) {
         this.productcost = productcost;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

@@ -15,13 +15,13 @@ public class ProductService {
         targetList.clear();
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT ProductId, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products"
+                    "SELECT ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products"
             );
             if (statement != null) {
                 ResultSet results = statement.executeQuery();
                 if (results != null) {
                     while (results.next()) {
-                        targetList.add(new Product(results.getInt("ProductId"), results.getString("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL")));
+                        targetList.add(new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL")));
 
 
                     }
@@ -40,13 +40,13 @@ public class ProductService {
         Product result = null;
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT ProductId, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products WHERE ProductId = ?"
+                    "SELECT ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products WHERE ProductID = ?"
             );
             if (statement != null) {
                 statement.setInt(1, id);
                 ResultSet results = statement.executeQuery();
                 if (results != null && results.next()) {
-                    result = new Product(results.getInt("ProductId"), results.getString("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL"));
+                    result = new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL"));
 
 
                 }
@@ -62,18 +62,16 @@ public class ProductService {
     public static String insert(Product itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "INSERT INTO Products (ProductId, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO Products (ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setInt(1, itemToSave.getProductid());
-            statement.setString(2, itemToSave.getInventoryid());
+            statement.setInt(2, itemToSave.getInventoryid());
             statement.setString(3, itemToSave.getSalesid());
             statement.setString(4, itemToSave.getProductname());
             statement.setString(5, itemToSave.getProductdescription());
             statement.setString(6, itemToSave.getProductcost());
             statement.setString(7, itemToSave.getQuantity());
             statement.setString(8, itemToSave.getImageurl());
-
-
 
 
 
@@ -93,9 +91,9 @@ public class ProductService {
     public static String update(Product itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "UPDATE Products SET InventoryId = ?, SalesId = ?, ProductName = ?, ProductDescription = ?, ProductCost = ?, Quantity = ?, ImageURL = ? WHERE ProductId = ?"
+                    "UPDATE Products SET InventoryId = ?, SalesId = ?, ProductName = ?, ProductDescription = ?, ProductCost = ?, Quantity = ?, ImageURL = ? WHERE ProductID = ?"
             );
-            statement.setString(1, itemToSave.getInventoryid());
+            statement.setInt(1, itemToSave.getInventoryid());
             statement.setString(2, itemToSave.getSalesid());
             statement.setString(3, itemToSave.getProductname());
             statement.setString(4, itemToSave.getProductdescription());
@@ -124,7 +122,7 @@ public class ProductService {
     public static String deleteById(int id) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "DELETE FROM Products WHERE ProductId = ?"
+                    "DELETE FROM Products WHERE ProductID = ?"
             );
             statement.setInt(1, id);
             statement.executeUpdate();
