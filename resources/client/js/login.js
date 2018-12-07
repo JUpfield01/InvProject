@@ -37,8 +37,16 @@ function resetNewUserForm() {
         });
     });
 }
+function checkLogin() {
+    if (window.location.href !== "http://localhost:8081/client/login.html?id=-1") {
+        window.location.replace("http://localhost:8081/client/login.html?id=-1");
 
-function pageLoad() {
-    resetLoginForm();
-    resetNewUserForm();
+    }
+
+
+    function pageLoad() {
+        resetLoginForm();
+        resetNewUserForm();
+        checkLogin();
+    }
 }
