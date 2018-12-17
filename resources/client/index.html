@@ -25,6 +25,12 @@
 <body class="bg-dark" onload="updateProductList()">
 <div class="container bg-white pb-4">
     <h1 class="text-center p-4">76692 Inventory</h1>
+    <div class="font-italic text-secondary">
+        Currently logged in as <span id="username">...</span>
+        <button id="logout" class="btn btn-sm btn-outline-danger ml-2">
+            Log out
+        </button>
+    </div>
     <a class="btn btn-default" href="/client/login.html?id=-1" role="login">Login</a>
 <div id="products"></div>
 

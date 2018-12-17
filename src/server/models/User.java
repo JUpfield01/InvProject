@@ -5,32 +5,38 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 public class User {
-    private String userid;
+    private int id;
     private String username;
-    private String useremail;
-    private String userpassword;
-    private String userdob;
+    private String password;
+    private String sessionToken;
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Get IntelliJ to auto-generate a constructor, getter and setters here:
 
-    public User(String userid, String username, String useremail, String userpassword, String userdob) {
-        this.userid = userid;
+    public User(int id, String username, String password, String sessionToken) {
+        this.id = id;
         this.username = username;
-        this.useremail = useremail;
-        this.userpassword = userpassword;
-        this.userdob = userdob;
+        this.password = password;
+        this.sessionToken = sessionToken;
     }
 
-    public User() {
-
+    public int getId() {
+        return id;
     }
 
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -41,42 +47,43 @@ public class User {
         this.username = username;
     }
 
-    public String getUseremail() {
-        return useremail;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUseremail(String useremail) {
-        this.useremail = useremail;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUserpassword() {
-        return userpassword;
+    public String getSessionToken() {
+        return sessionToken;
     }
 
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword;
-    }
-
-    public String getUserdob() {
-        return userdob;
-    }
-
-    public void setUserdob(String userdob) {
-        this.userdob = userdob;
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
     }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public static ArrayList<User> users = new ArrayList<>();
 
+    public static int nextId() {
+        int id = 0;
+        for (User u: users) {
+            if (u.getId() > id) {
+                id = u.getId();
+            }
+        }
+        return id + 1;
+    }
 
     @SuppressWarnings("unchecked")
     public JSONObject toJSON() {
         JSONObject j = new JSONObject();
-        j.put("userid", getUserid());
+        j.put("id", getId());
         j.put("username", getUsername());
-        j.put("useremail", getUseremail());
-        j.put("userpassword", getUserpassword());
-        j.put("userdob", getUserdob());
+        j.put("password", getPassword());
+        j.put("sessionToken", getSessionToken());
+
 
 
 

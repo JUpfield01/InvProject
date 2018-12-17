@@ -4,6 +4,7 @@ import server.Logger;
 import server.DatabaseConnection;
 import server.models.User;
 
+import javax.ws.rs.core.Cookie;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,20 +16,20 @@ public class UserService {
         targetList.clear();
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT UserId, UserName, UserEmail, UserPassword, UserDOB FROM UserInfo"
+                    "SELECT Id, Username, Password, SessionToken FROM User"
             );
             if (statement != null) {
                 ResultSet results = statement.executeQuery();
                 if (results != null) {
                     while (results.next()) {
-                        targetList.add(new User());
+                        targetList.add(new User(results.getInt("Id"), results.getString("Username"), results.getString("Password"), results.getString("SessionToken")));
 
 
                     }
                 }
             }
         } catch (SQLException resultsException) {
-            String error = "Database error - can't select all from 'UserInfo' table: " + resultsException.getMessage();
+            String error = "Database error - can't select all from 'User' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
@@ -40,19 +41,19 @@ public class UserService {
         User result = null;
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT UserId, UserName, UserEmail, UserPassword, UserDOB FROM UserInfo WHERE UserId = ?"
+                    "SELECT Id, Username, Password, SessionToken FROM User WHERE Id = ?"
             );
             if (statement != null) {
                 statement.setInt(1, id);
                 ResultSet results = statement.executeQuery();
                 if (results != null && results.next()) {
-                    result = new User();
+                    result = new User(results.getInt("Id"), results.getString("Username"), results.getString("Password"), results.getString("SessionToken"));
 
 
                 }
             }
         } catch (SQLException resultsException) {
-            String error = "Database error - can't select by id from 'UserInfo' table: " + resultsException.getMessage();
+            String error = "Database error - can't select by id from 'User' table: " + resultsException.getMessage();
 
             Logger.log(error);
         }
@@ -62,13 +63,13 @@ public class UserService {
     public static String insert(User itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "INSERT INTO UserInfo (UserId, UserName, UserEmail, UserPassword, UserDOB) VALUES ("
+                    "INSERT INTO User (Id, Username, Password, SessionToken) VALUES (?, ?, ?, ?)"
             );
-            statement.setString(1, itemToSave.getUserid());
+            statement.setInt(1, itemToSave.getId());
             statement.setString(2, itemToSave.getUsername());
-            statement.setString(3, itemToSave.getUseremail());
-            statement.setString(4, itemToSave.getUserpassword());
-            statement.setString(5, itemToSave.getUserdob());
+            statement.setString(3, itemToSave.getPassword());
+            statement.setString(4, itemToSave.getSessionToken());
+
 
 
 
@@ -83,7 +84,7 @@ public class UserService {
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't insert into 'UserInfo' table: " + resultsException.getMessage();
+            String error = "Database error - can't insert into 'User' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
@@ -93,17 +94,28 @@ public class UserService {
     public static String update(User itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "UPDATE UserInfo SET  WHERE "
+                    "UPDATE User SET Username = ?, Password = ?, SessionToken = ? WHERE Id = ?"
             );
             statement.setString(1, itemToSave.getUsername());
-            statement.setString(2, itemToSave.getUseremail());
-            statement.setString(3, itemToSave.getUserpassword());
-            statement.setString(4, itemToSave.getUserdob());
-            statement.setString(5, itemToSave.getUserid());
+            statement.setString(2, itemToSave.getPassword());
+            statement.setString(3, itemToSave.getSessionToken());
+
+
+
+
+
+
+
+
+
+
+
+
+            statement.setInt(4, itemToSave.getId());
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't update 'UserInfo' table: " + resultsException.getMessage();
+            String error = "Database error - can't update 'User' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
@@ -113,17 +125,34 @@ public class UserService {
     public static String deleteById(int id) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "DELETE FROM UserInfo WHERE UserId = ?"
+                    "DELETE FROM User WHERE Id = ?"
             );
             statement.setInt(1, id);
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't delete by id from 'UserInfo' table: " + resultsException.getMessage();
+            String error = "Database error - can't delete by id from 'User' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
         }
     }
+    public static String validateSessionCookie(Cookie sessionCookie) {
+        if (sessionCookie != null) {
+            String token = sessionCookie.getValue();
+            String result = UserService.selectAllInto(User.users);
+            if (result.equals("OK")) {
+                for (User u : User.users) {
+                    if (u.getSessionToken().equals(token)) {
+                        Logger.log("Valid session token received.");
+                        return u.getUsername();
+                    }
+                }
+            }
+        }
+        Logger.log("Error: Invalid user session token");
+        return null;
+    }
+
 
 }
