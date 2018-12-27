@@ -1,4 +1,5 @@
 package server.controllers;
+
 import server.Logger;
 import server.models.User;
 import server.models.services.UserService;
@@ -8,6 +9,7 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.util.UUID;
 
+@Path("user/")
 public class UserController {
 
     @POST
@@ -19,7 +21,7 @@ public class UserController {
                              @FormParam("password2") String password2) {
         Logger.log("/user/new - Creating " + username);
         UserService.selectAllInto(User.users);
-        for (User u : User.users) {
+        for (User u: User.users) {
             if (u.getUsername().toLowerCase().equals(username.toLowerCase())) {
                 return "Error: Username already exists";
             }
@@ -42,11 +44,11 @@ public class UserController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public String newMessage(@FormParam("username") String username,
-                             @FormParam("password") String password) {
+                             @FormParam("password") String password ) {
 
         Logger.log("/user/login - Attempt by " + username);
         UserService.selectAllInto(User.users);
-        for (User u : User.users) {
+        for (User u: User.users) {
             if (u.getUsername().toLowerCase().equals(username.toLowerCase())) {
                 if (!u.getPassword().equals(password)) {
                     return "Error: Incorrect password";
@@ -64,19 +66,19 @@ public class UserController {
         return "Error: Can't find user account.";
     }
 
-        @GET
-        @Path("get")
-        @Produces(MediaType.TEXT_PLAIN)
-        public String getUser(@CookieParam("sessionToken") Cookie sessionCookie) {
+    @GET
+    @Path("get")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getUser(@CookieParam("sessionToken") Cookie sessionCookie) {
 
-            String currentUser = UserService.validateSessionCookie(sessionCookie);
+        String currentUser = UserService.validateSessionCookie(sessionCookie);
 
-            if (currentUser == null) {
-                return "";
-            } else {
-                return currentUser;
-            }
+        if (currentUser == null) {
+            return "";
+        } else {
+            return currentUser;
         }
-
     }
+
+}
 

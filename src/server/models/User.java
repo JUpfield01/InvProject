@@ -10,19 +10,19 @@ public class User {
     private String password;
     private String sessionToken;
 
+    public static ArrayList<User> users = new ArrayList<>();
 
+    public static int nextId() {
+        int id = 0;
+        for (User u: users) {
+            if (u.getId() > id) {
+                id = u.getId();
+            }
+        }
+        return id + 1;
+    }
 
-
-
-
-
-
-
-
-
-
-
-    // Get IntelliJ to auto-generate a constructor, getter and setters here:
+//id assigner
 
     public User(int id, String username, String password, String sessionToken) {
         this.id = id;
@@ -62,19 +62,8 @@ public class User {
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
     }
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public static ArrayList<User> users = new ArrayList<>();
-
-    public static int nextId() {
-        int id = 0;
-        for (User u: users) {
-            if (u.getId() > id) {
-                id = u.getId();
-            }
-        }
-        return id + 1;
-    }
+    //Constructor
 
     @SuppressWarnings("unchecked")
     public JSONObject toJSON() {
@@ -83,17 +72,6 @@ public class User {
         j.put("username", getUsername());
         j.put("password", getPassword());
         j.put("sessionToken", getSessionToken());
-
-
-
-
-
-
-
-
-
-
-
 
         return j;
     }

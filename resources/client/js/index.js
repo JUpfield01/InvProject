@@ -14,22 +14,21 @@ function updateProductList() {
                 let productsHTML = `<div class="container">`
                     + `<div class="row mb-2">`
                     + `<div class="col-3 bg-light font-weight-bold">Product Name</div>`
-                    + `<div class="col-2 bg-light font-weight-bold">Description</div>`
+                    + `<div class="col-3 bg-light font-weight-bold">Description</div>`
                     + `<div class="col-1 bg-light font-weight-bold">Cost</div>`
                     + `<div class="col-2 bg-light font-weight-bold">Image</div>`
-                    + `<div class="col-3 text-right bg-light font-weight-bold">Options</div>`
+                    + `<div class="col-2 text-right bg-light font-weight-bold">Options</div>`
                     + `</div>`;
 
                 for (let product of productList) {
                     productsHTML += `<div class="row mb-2">`
                         + `<div class="col-3">${product.productname}</div>`
-                        + `<div class="col-2">${product.productdescription}</div>`
+                        + `<div class="col-3">${product.productdescription}</div>`
                         + `<div class="col-1">${product.productcost}</div>`
                         + `<div class="col-2"><a href="${product.imageurl}" target=”_blank”><img width="120" height="90" src="${product.imageurl}"></a></div>`
-                        + `<div class="col-3 text-right">`
-                        + `<a class="btn btn-sm btn-info mr-2"  href="/client/games.html?id=${product.id}">Update</a>`
-                        + `<a class="btn btn-sm btn-info mr-2"  href="/client/accessories.html?id=${product.id}">Remove</a>`
-                        + `<a class="btn btn-sm btn-success"  href="/client/editconsole.html?id=${product.id}">Edit</a>`
+                        + `<div class="col-2 text-right">`
+                        + `<a class="btn btn-sm btn-info mr-2"  href="/client/remove.html?id=${product.id}">Remove</a>`
+                        + `<a class="btn btn-sm btn-success"  href="/client/edit.html?id=${product.id}">Edit</a>`
                         + `</div>`;
                 }
                 productsHTML += `</div>`;
@@ -40,6 +39,7 @@ function updateProductList() {
 
         }
     });
+
     function checkLogin() {
 
         let token = Cookies.get("sessionToken");
@@ -65,5 +65,11 @@ function updateProductList() {
             window.location.href = "/client/login.html";
         });
     }
+
+        function pageLoad() {
+
+        checkLogin();
+        updateProductList();
+        }
 
 }

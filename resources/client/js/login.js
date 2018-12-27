@@ -42,5 +42,3 @@ function pageLoad() {
     resetLoginForm();
     resetNewUserForm();
 }
-
-

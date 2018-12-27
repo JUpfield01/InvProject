@@ -12,6 +12,23 @@ import java.util.List;
 
 public class UserService {
 
+    public static String validateSessionCookie(Cookie sessionCookie) {
+        if (sessionCookie != null) {
+            String token = sessionCookie.getValue();
+            String result = UserService.selectAllInto(User.users);
+            if (result.equals("OK")) {
+                for (User u : User.users) {
+                    if (u.getSessionToken().equals(token)) {
+                        Logger.log("Valid session token received.");
+                        return u.getUsername();
+                    }
+                }
+            }
+        }
+        Logger.log("Error: Invalid user session token");
+        return null;
+    }
+
     public static String selectAllInto(List<User> targetList) {
         targetList.clear();
         try {
@@ -71,16 +88,6 @@ public class UserService {
             statement.setString(4, itemToSave.getSessionToken());
 
 
-
-
-
-
-
-
-
-
-
-
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
@@ -99,16 +106,6 @@ public class UserService {
             statement.setString(1, itemToSave.getUsername());
             statement.setString(2, itemToSave.getPassword());
             statement.setString(3, itemToSave.getSessionToken());
-
-
-
-
-
-
-
-
-
-
 
 
             statement.setInt(4, itemToSave.getId());
@@ -137,22 +134,4 @@ public class UserService {
             return error;
         }
     }
-    public static String validateSessionCookie(Cookie sessionCookie) {
-        if (sessionCookie != null) {
-            String token = sessionCookie.getValue();
-            String result = UserService.selectAllInto(User.users);
-            if (result.equals("OK")) {
-                for (User u : User.users) {
-                    if (u.getSessionToken().equals(token)) {
-                        Logger.log("Valid session token received.");
-                        return u.getUsername();
-                    }
-                }
-            }
-        }
-        Logger.log("Error: Invalid user session token");
-        return null;
-    }
-
-
 }
