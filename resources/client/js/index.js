@@ -39,7 +39,7 @@ function updateProductList() {
 
         }
     });
-
+}
     function checkLogin() {
 
         let token = Cookies.get("sessionToken");
@@ -72,4 +72,4 @@ function updateProductList() {
         updateProductList();
         }
 
-}
+
