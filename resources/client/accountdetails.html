@@ -19,7 +19,7 @@
 
 </head>
 
-/nav menu top
+
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home.html">76692 Inventory</a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
@@ -31,10 +31,8 @@
         </li>
     </ul>
 </nav>
-
-<body onload="updateInventory()">
-
-/nav menu
+<body onload="pageLoad()">
+//nav menu
 <div class="container-fluid">
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -42,25 +40,25 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
-                            <span data-feather="shopping-cart"></span>
+                            <span data-feather="file"></span>
                             Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="products.html">
-                            <span data-feather="layers"></span>
+                            <span data-feather="file"></span>
                             Products
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="inventory.html">
-                            <span data-feather="home"></span>
-                            Inventory <span class="sr-only">(current)</span>
+                        <a class="nav-link" href="inventory.html">
+                            <span data-feather="shopping-cart"></span>
+                            Inventory
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="settings.html">
-                            <span data-feather="layers"></span>
+                            <span data-feather="shopping-cart"></span>
                             Settings
                         </a>
                     </li>
@@ -74,9 +72,9 @@
                 </h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="/client/accountdetails.html">
-                            <span data-feather="file-text"></span>
-                            Account Details
+                        <a class="nav-link active" href="accountdetails.html">
+                            <span data-feather="home"></span>
+                            Account Details <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -89,22 +87,11 @@
             </div>
         </nav>
 
-        /display products
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="container bg-white pb-4">
-                <h1 class="text-center p-4">Inventory</h1>
-                <div class="font-italic text-secondary">
-
-                </div>
-                <div id="products"></div>
-                <hr />
-                <div class="py-4 text-right"><a class="btn btn-sm btn-outline-secondary" href="/client/inventory.html?id=-1">Modify Inventory</a></div>
-
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Account Details</h1>
 
             </div>
-        </main>
-    </div>
-</div>
 
 
 </body>

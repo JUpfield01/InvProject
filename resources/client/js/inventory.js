@@ -1,3 +1,3 @@
-function pageLoad() {
+function updateInventory() {
 
 }
