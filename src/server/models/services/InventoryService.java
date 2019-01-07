@@ -36,6 +36,32 @@ public class InventoryService {
         return "OK";
     }
 
+
+    public static String selectAllIntoByUser(List<Inventory> targetList, int ID) {
+        targetList.clear();
+        try {
+            PreparedStatement statement = DatabaseConnection.newStatement(
+                    "SELECT InventoryId, UserId FROM InventoryLookup where ID = ?"
+            );
+            if (statement != null) {
+                statement.setInt(1, ID);
+                ResultSet results = statement.executeQuery();
+                if (results != null) {
+                    while (results.next()) {
+                        targetList.add(new Inventory());
+                    }
+                }
+            }
+        } catch (SQLException resultsException) {
+            String error = "Database error - can't select all from 'Inventory' table by ID: " + resultsException.getMessage();
+
+            Logger.log(error);
+            return error;
+        }
+        return "OK";
+    }
+
+
     public static Inventory selectById(int id) {
         Inventory result = null;
         try {
