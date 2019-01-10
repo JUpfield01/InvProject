@@ -74,3 +74,4 @@ function productLoad() {
     checkLogin();
     updateProductList();
 }
+
