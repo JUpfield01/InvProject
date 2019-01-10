@@ -42,6 +42,9 @@ function updateProductList() {
 }
 function checkLogin() {
 
+    console.log("Invoked checkLogin()");
+
+
     let token = Cookies.get("sessionToken");
 
     if (token === undefined) {
@@ -59,11 +62,11 @@ function checkLogin() {
             }
         });
     }
+}
 
-    $("#logout").click(event => {
-        Cookies.remove("sessionToken");
-        window.location.href = "/client/login.html";
-    });
+function logout() {
+    Cookies.remove("sessionToken");
+    window.location.href = "/client/login.html";
 }
 
 function productLoad() {
