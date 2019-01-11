@@ -5,12 +5,12 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 public class Inventory {
-    private int inventoryid;
+    private int productId;
     private int userid;
 
 
     public Inventory(int inventoryid, int userid) {
-        this.inventoryid = inventoryid;
+        this.productId = inventoryid;
         this.userid = userid;
     }
 
@@ -18,12 +18,12 @@ public class Inventory {
 
     }
 
-    public int getInventoryid() {
-        return inventoryid;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setInventoryid(int inventoryid) {
-        this.inventoryid = inventoryid;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public int getUserid() {
@@ -39,8 +39,8 @@ public class Inventory {
     public static int nextId() {
         int id = 0;
         for (Inventory i: inventorys) {
-            if (i.getInventoryid() > id) {
-                id = i.getInventoryid();
+            if (i.getProductId() > id) {
+                id = i.getProductId();
             }
         }
         return id + 1;
@@ -49,7 +49,7 @@ public class Inventory {
     @SuppressWarnings("unchecked")
     public JSONObject toJSON() {
         JSONObject j = new JSONObject();
-        j.put("inventoryid", getInventoryid());
+        j.put("productId", getProductId());
         j.put("userid", getUserid());
 
         return j;

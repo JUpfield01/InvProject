@@ -15,70 +15,44 @@ public class InventoryService {
         targetList.clear();
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT InventoryId, UserId FROM InventoryLookup"
+                    "SELECT ProductId, UserId FROM InventoryLookUp"
             );
             if (statement != null) {
                 ResultSet results = statement.executeQuery();
                 if (results != null) {
                     while (results.next()) {
-                        targetList.add(new Inventory());
+                        targetList.add(new Inventory(results.getInt("ProductId"), results.getInt("UserId")));
 
 
                     }
                 }
             }
         } catch (SQLException resultsException) {
-            String error = "Database error - can't select all from 'InventoryLookup' table: " + resultsException.getMessage();
+            String error = "Database error - can't select all from 'InventoryLookUp' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
         }
         return "OK";
     }
-
-
-    public static String selectAllIntoByUser(List<Inventory> targetList, int ID) {
-        targetList.clear();
-        try {
-            PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT InventoryId, UserId FROM InventoryLookup where ID = ?"
-            );
-            if (statement != null) {
-                statement.setInt(1, ID);
-                ResultSet results = statement.executeQuery();
-                if (results != null) {
-                    while (results.next()) {
-                        targetList.add(new Inventory());
-                    }
-                }
-            }
-        } catch (SQLException resultsException) {
-            String error = "Database error - can't select all from 'Inventory' table by ID: " + resultsException.getMessage();
-
-            Logger.log(error);
-            return error;
-        }
-        return "OK";
-    }
-
 
     public static Inventory selectById(int id) {
         Inventory result = null;
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT InventoryId, UserId FROM InventoryLookup WHERE InventoryId = ?"
+                    "SELECT ProductId, UserId FROM InventoryLookUp WHERE ProductId = ?"
             );
             if (statement != null) {
                 statement.setInt(1, id);
                 ResultSet results = statement.executeQuery();
                 if (results != null && results.next()) {
-                    result = new Inventory();
+                    result = new Inventory(results.getInt("ProductId"), results.getInt("UserId"));
 
 
                 }
             }
         } catch (SQLException resultsException) {
-            String error = "Database error - can't select by id from 'InventoryLookup' table: " + resultsException.getMessage();
+            String error = "Database error - can't select by id from 'InventoryLookUp' table: " + resultsException.getMessage();
 
             Logger.log(error);
         }
@@ -88,9 +62,9 @@ public class InventoryService {
     public static String insert(Inventory itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "INSERT INTO InventoryLookup (InventoryId, UserId) VALUES ("
+                    "INSERT INTO InventoryLookUp (ProductId, UserId) VALUES (?, ?)"
             );
-            statement.setInt(1, itemToSave.getInventoryid());
+            statement.setInt(1, itemToSave.getProductId());
             statement.setInt(2, itemToSave.getUserid());
 
 
@@ -109,7 +83,7 @@ public class InventoryService {
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't insert into 'InventoryLookup' table: " + resultsException.getMessage();
+            String error = "Database error - can't insert into 'InventoryLookUp' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
@@ -119,7 +93,7 @@ public class InventoryService {
     public static String update(Inventory itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "UPDATE InventoryLookup SET  WHERE "
+                    "UPDATE InventoryLookUp SET UserId = ? WHERE ProductId = ?"
             );
             statement.setInt(1, itemToSave.getUserid());
 
@@ -136,11 +110,11 @@ public class InventoryService {
 
 
 
-            statement.setInt(2, itemToSave.getInventoryid());
+            statement.setInt(2, itemToSave.getProductId());
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't update 'InventoryLookup' table: " + resultsException.getMessage();
+            String error = "Database error - can't update 'InventoryLookUp' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;
@@ -150,13 +124,13 @@ public class InventoryService {
     public static String deleteById(int id) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "DELETE FROM InventoryLookup WHERE InventoryId = ?"
+                    "DELETE FROM InventoryLookUp WHERE ProductId = ?"
             );
             statement.setInt(1, id);
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {
-            String error = "Database error - can't delete by id from 'InventoryLookup' table: " + resultsException.getMessage();
+            String error = "Database error - can't delete by id from 'InventoryLookUp' table: " + resultsException.getMessage();
 
             Logger.log(error);
             return error;

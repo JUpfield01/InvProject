@@ -35,6 +35,29 @@ public class ProductService {
         }
         return "OK";
     }
+//select procuts by with a user id to display in inventory
+    public static Product selectByUser(int id) {
+        Product result = null;
+        try {
+            PreparedStatement statement = DatabaseConnection.newStatement(
+                    "SELECT ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products WHERE ProductID = ?"
+            );
+            if (statement != null) {
+                statement.setInt(1, id);
+                ResultSet results = statement.executeQuery();
+                if (results != null && results.next()) {
+                    result = new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL"));
+
+
+                }
+            }
+        } catch (SQLException resultsException) {
+            String error = "Database error - can't select by id from 'Products' table: " + resultsException.getMessage();
+
+            Logger.log(error);
+        }
+        return result;
+    }
 
     public static Product selectById(int id) {
         Product result = null;

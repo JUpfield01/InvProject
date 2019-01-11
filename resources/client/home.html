@@ -5,16 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="shortcut icon" href="/client/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="/client/css/bootstrap.min.css">
   <link rel="stylesheet" href="/client/css/cover.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/client/js/jquery-3.3.1.min.js"></script>
+  <script src="/client/js/popper.min.js"></script>
+  <script src="/client/js/bootstrap.min.js"></script>
 
   <title>Welcome to 76692 Inventory</title>
 
+  <script>
+    function pageLoad() {
+        $('[data-toggle="popover"]').popover();
+    }
+  </script>
+
 </head>
-<body class="text-center" onload="">
+<body class="text-center" onload="pageLoad()">
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header class="masthead mb-auto">
@@ -44,11 +51,6 @@
   </footer>
 </div>
 
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="popover"]').popover();
-    });
-</script>
 
 </body>
 </html>
