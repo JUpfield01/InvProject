@@ -7,17 +7,26 @@ import java.util.ArrayList;
 public class Product {
     private int productid;
     private int inventoryid;
-    private String salesid;
     private String productname;
     private String productdescription;
-    private String productcost;
-    private String quantity;
+    private float productcost;
+    private int quantity;
     private String imageurl;
 
-    public Product(int productid, int inventoryid, String salesid, String productname, String productdescription, String productcost, String quantity, String imageurl) {
+
+
+
+
+
+
+
+
+
+    // Get IntelliJ to auto-generate a constructor, getter and setters here:
+
+    public Product(int productid, int inventoryid, String productname, String productdescription, float productcost, int quantity, String imageurl) {
         this.productid = productid;
         this.inventoryid = inventoryid;
-        this.salesid = salesid;
         this.productname = productname;
         this.productdescription = productdescription;
         this.productcost = productcost;
@@ -41,14 +50,6 @@ public class Product {
         this.inventoryid = inventoryid;
     }
 
-    public String getSalesid() {
-        return salesid;
-    }
-
-    public void setSalesid(String salesid) {
-        this.salesid = salesid;
-    }
-
     public String getProductname() {
         return productname;
     }
@@ -65,19 +66,19 @@ public class Product {
         this.productdescription = productdescription;
     }
 
-    public String getProductcost() {
+    public float getProductcost() {
         return productcost;
     }
 
-    public void setProductcost(String productcost) {
+    public void setProductcost(float productcost) {
         this.productcost = productcost;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -107,12 +108,12 @@ public class Product {
         JSONObject j = new JSONObject();
         j.put("productid", getProductid());
         j.put("inventoryid", getInventoryid());
-        j.put("salesid", getSalesid());
         j.put("productname", getProductname());
         j.put("productdescription", getProductdescription());
         j.put("productcost", getProductcost());
         j.put("quantity", getQuantity());
         j.put("imageurl", getImageurl());
+
 
 
 

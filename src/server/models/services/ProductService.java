@@ -15,13 +15,13 @@ public class ProductService {
         targetList.clear();
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products"
+                    "SELECT ProductID, InventoryId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products"
             );
             if (statement != null) {
                 ResultSet results = statement.executeQuery();
                 if (results != null) {
                     while (results.next()) {
-                        targetList.add(new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL")));
+                        targetList.add(new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getFloat("ProductCost"), results.getInt("Quantity"), results.getString("ImageURL")));
 
 
                     }
@@ -35,41 +35,18 @@ public class ProductService {
         }
         return "OK";
     }
-//select procuts by with a user id to display in inventory
-    public static Product selectByUser(int id) {
-        Product result = null;
-        try {
-            PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products WHERE ProductID = ?"
-            );
-            if (statement != null) {
-                statement.setInt(1, id);
-                ResultSet results = statement.executeQuery();
-                if (results != null && results.next()) {
-                    result = new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL"));
-
-
-                }
-            }
-        } catch (SQLException resultsException) {
-            String error = "Database error - can't select by id from 'Products' table: " + resultsException.getMessage();
-
-            Logger.log(error);
-        }
-        return result;
-    }
 
     public static Product selectById(int id) {
         Product result = null;
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "SELECT ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products WHERE ProductID = ?"
+                    "SELECT ProductID, InventoryId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL FROM Products WHERE ProductID = ?"
             );
             if (statement != null) {
                 statement.setInt(1, id);
                 ResultSet results = statement.executeQuery();
                 if (results != null && results.next()) {
-                    result = new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("SalesId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getString("ProductCost"), results.getString("Quantity"), results.getString("ImageURL"));
+                    result = new Product(results.getInt("ProductID"), results.getInt("InventoryId"), results.getString("ProductName"), results.getString("ProductDescription"), results.getFloat("ProductCost"), results.getInt("Quantity"), results.getString("ImageURL"));
 
 
                 }
@@ -85,16 +62,18 @@ public class ProductService {
     public static String insert(Product itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "INSERT INTO Products (ProductID, InventoryId, SalesId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO Products (ProductID, InventoryId, ProductName, ProductDescription, ProductCost, Quantity, ImageURL) VALUES (?, ?, ?, ?, ?, ?, ?)"
             );
             statement.setInt(1, itemToSave.getProductid());
             statement.setInt(2, itemToSave.getInventoryid());
-            statement.setString(3, itemToSave.getSalesid());
-            statement.setString(4, itemToSave.getProductname());
-            statement.setString(5, itemToSave.getProductdescription());
-            statement.setString(6, itemToSave.getProductcost());
-            statement.setString(7, itemToSave.getQuantity());
-            statement.setString(8, itemToSave.getImageurl());
+            statement.setString(3, itemToSave.getProductname());
+            statement.setString(4, itemToSave.getProductdescription());
+            statement.setFloat(5, itemToSave.getProductcost());
+            statement.setInt(6, itemToSave.getQuantity());
+            statement.setString(7, itemToSave.getImageurl());
+
+
+
 
 
 
@@ -114,15 +93,14 @@ public class ProductService {
     public static String update(Product itemToSave) {
         try {
             PreparedStatement statement = DatabaseConnection.newStatement(
-                    "UPDATE Products SET InventoryId = ?, SalesId = ?, ProductName = ?, ProductDescription = ?, ProductCost = ?, Quantity = ?, ImageURL = ? WHERE ProductID = ?"
+                    "UPDATE Products SET InventoryId = ?, ProductName = ?, ProductDescription = ?, ProductCost = ?, Quantity = ?, ImageURL = ? WHERE ProductID = ?"
             );
             statement.setInt(1, itemToSave.getInventoryid());
-            statement.setString(2, itemToSave.getSalesid());
-            statement.setString(3, itemToSave.getProductname());
-            statement.setString(4, itemToSave.getProductdescription());
-            statement.setString(5, itemToSave.getProductcost());
-            statement.setString(6, itemToSave.getQuantity());
-            statement.setString(7, itemToSave.getImageurl());
+            statement.setString(2, itemToSave.getProductname());
+            statement.setString(3, itemToSave.getProductdescription());
+            statement.setFloat(4, itemToSave.getProductcost());
+            statement.setInt(5, itemToSave.getQuantity());
+            statement.setString(6, itemToSave.getImageurl());
 
 
 
@@ -131,7 +109,8 @@ public class ProductService {
 
 
 
-            statement.setInt(8, itemToSave.getProductid());
+
+            statement.setInt(7, itemToSave.getProductid());
             statement.executeUpdate();
             return "OK";
         } catch (SQLException resultsException) {

@@ -35,7 +35,6 @@ public class ProductController {
                 System.out.println(c.getProductcost());
                 System.out.println(c.getProductdescription());
                 System.out.println(c.getQuantity());
-                System.out.println(c.getSalesid());
 
                 JSONObject jc = c.toJSON();
 

@@ -69,9 +69,10 @@ function logout() {
     window.location.href = "/client/login.html";
 }
 
-function productLoad() {
+function pageLoadProduct() {
 
-    checkLogin();
     updateProductList();
+    checkLogin();
+
 }
 
