@@ -1,7 +1,9 @@
 function updateInventory() {
 
+    let id = 1;
+
     $.ajax({
-        url: '/inventory/list/{id}',
+        url: '/inventory/list/' + id,
         type: 'GET',
         success: inventoryList => {
 
