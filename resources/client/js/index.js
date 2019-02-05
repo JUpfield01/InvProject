@@ -1,6 +1,6 @@
 function updateInventory() {
 
-    let id = 1;
+    let id = 3;
 
     $.ajax({
         url: '/inventory/list/' + id,

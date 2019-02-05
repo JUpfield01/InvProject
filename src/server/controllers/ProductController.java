@@ -8,6 +8,7 @@ import server.models.services.ProductService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.Console;
@@ -52,5 +53,32 @@ public class ProductController {
 
     }
 
+
+
+    @GET
+    @Path("get/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getConsole(@PathParam("id") int id) {
+
+        Logger.log("/product/get/"+ id + " - Getting product details from database");
+
+        Product c = ProductService.selectById(id);
+        if (c != null) {
+
+            JSONObject cj = c.toJSON();
+
+            Product m = ProductService.selectById(c.getProductid());
+            cj.put("product", m.getProductname());
+
+            return cj.toString();
+
+        } else {
+
+            return "{'error': 'Can't find product with id " + id + "'}";
+
+        }
+
+    }
 }
+
 

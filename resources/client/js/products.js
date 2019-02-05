@@ -1,6 +1,6 @@
 function updateP() {
 
-    let id = 1;
+    let id = 3;
 
     $.ajax({
         url: '/inventory/list/' + id,
@@ -15,18 +15,23 @@ function updateP() {
 
                 let productHTML = `<div class="container">`
                     + `<div class="row mb-2">`
-                    + `<div class="col-3 bg-light font-weight-bold">Product Name</div>`
+                    + `<div class="col-2 bg-light font-weight-bold">Product Name</div>`
                     + `<div class="col-4 bg-light font-weight-bold">Description</div>`
+                    + `<div class="col-2 bg-light font-weight-bold">Price</div>`
                     + `<div class="col-1 bg-light font-weight-bold">Quantity</div>`
-                    + `<div class="col-3 bg-light font-weight-bold">Image</div>`
+                    + `<div class="col-2 bg-light font-weight-bold">Image</div>`
+                    + `<div class="col-1 bg-light font-weight-bold">Edit</div>`
                     + `</div>`;
 
                 for (let product of productList) {
                     productHTML += `<div class="row mb-2">`
-                        + `<div class="col-3">${product.productname}</div>`
+                        + `<div class="col-2">${product.productname}</div>`
                         + `<div class="col-4">${product.productdescription}</div>`
+                        + `<div class="col-2">${product.productcost}</div>`
                         + `<div class="col-1">${product.quantity}</div>`
-                        + `<div class="col-3"><a href="${product.imageurl}" target=”_blank”><img width="120" height="90" src="${product.imageurl}"></a></div>`
+                        + `<div class="col-2"><a href="${product.imageurl}" target=”_blank”><img width="120" height="90" src="${product.imageurl}"></a></div>`
+                        + `<div class="col-1 text-right">`
+                        + `<a class="container-fluid"  href="/client/editproducts.html?id=${product.id}">Edit</a>`
 
                         + `</div>`;
                 }
@@ -71,7 +76,7 @@ function logout() {
 
 function pageLoadProduct() {
 
-    updateProductList();
+    updateP();
     checkLogin();
 
 }
