@@ -68,15 +68,15 @@ public class UserController {
 
     @GET
     @Path("get")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getUser(@CookieParam("sessionToken") Cookie sessionCookie) {
 
-        String currentUser = UserService.validateSessionCookie(sessionCookie);
+        User currentUser = UserService.validateSessionCookie(sessionCookie);
 
         if (currentUser == null) {
             return "";
         } else {
-            return currentUser;
+            return currentUser.toJSON().toString();
         }
     }
 

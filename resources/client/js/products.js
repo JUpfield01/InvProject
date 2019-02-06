@@ -1,6 +1,7 @@
-function updateP() {
 
-    let id = 3;
+function updateP(user) {
+
+    let id = user.id;
 
     $.ajax({
         url: '/inventory/list/' + id,
@@ -31,7 +32,7 @@ function updateP() {
                         + `<div class="col-1">${product.quantity}</div>`
                         + `<div class="col-2"><a href="${product.imageurl}" target=”_blank”><img width="120" height="90" src="${product.imageurl}"></a></div>`
                         + `<div class="col-1 text-right">`
-                        + `<a class="container-fluid"  href="/client/editproducts.html?id=${product.id}">Edit</a>`
+                        + `<a class="container-fluid"  href="/client/editproducts.html?id=${product.productid}">Edit</a>`
 
                         + `</div>`;
                 }
@@ -58,11 +59,12 @@ function checkLogin() {
         $.ajax({
             url: '/user/get',
             type: 'GET',
-            success: username => {
-                if (username === "") {
+            success: user => {
+                if (!user.username) {
                     window.location.href = "/client/login.html";
                 } else {
-                    $("#username").html(username);
+                    $("#username").html(user.username);
+                    updateP(user);
                 }
             }
         });
@@ -76,7 +78,6 @@ function logout() {
 
 function pageLoadProduct() {
 
-    updateP();
     checkLogin();
 
 }
