@@ -1,11 +1,39 @@
-function updateInventory() {
+function displayLowestThree(list) {
 
-    let id = 3;
+    let sortedList = list.sort((a, b) => b.quantity - a.quantity);
+
+    let topThree = ['N/A', 'N/A', 'N/A'];
+
+    for (let i = 0; i < 3; i++) {
+        if (sortedList.length > i) {
+            topThree[i] = `<div>${sortedList[i].productname}</div>` +
+                `<div>Quantity ${sortedList[i].quantity}</div>` +
+                `<div><img width="120" height="90" src="${sortedList[i].imageurl}"></div>`;
+        }
+    }
+
+    let lowestHTML = `<div class="container">` +
+                        `<div class="row">` +
+                            `<div class="col-4">${topThree[0]}</div>` +
+                            `<div class="col-4">${topThree[1]}</div>` +
+                            `<div class="col-4">${topThree[2]}</div>` +
+                        `</div>` +
+                      `</div>`;
+
+    $("#runninglow").html(lowestHTML);
+
+}
+
+function updateInventory(user) {
+
+    let id = user.id;
 
     $.ajax({
         url: '/inventory/list/' + id,
         type: 'GET',
         success: inventoryList => {
+
+            displayLowestThree(inventoryList);
 
             if (inventoryList.hasOwnProperty('error')) {
 
@@ -22,6 +50,8 @@ function updateInventory() {
                     + `</div>`;
 
                 let sortedInventoryList = inventoryList.sort((a, b) => b.productid - a.productid);
+
+                console.log(sortedInventoryList);
 
                 for (let product of sortedInventoryList) {
                     inventoryHTML += `<div class="row mb-2">`
@@ -55,11 +85,12 @@ function checkLogin() {
         $.ajax({
             url: '/user/get',
             type: 'GET',
-            success: username => {
-                if (username === "") {
+            success: user => {
+                if (user === "") {
                     window.location.href = "/client/login.html";
                 } else {
-                    $("#username").html(username);
+                    $("#username").html(user.username);
+                    updateInventory(user);
                 }
             }
         });
@@ -74,7 +105,7 @@ function logout() {
 function pageLoad() {
 
     checkLogin();
-    updateInventory();
+
 }
 
 

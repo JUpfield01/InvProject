@@ -11,7 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="/client/js/login.js"></script>
     <script src="/client/js/index.js"></script>
-    <script src="/client/js/products.js"></script>
+    <!--<script src="/client/js/products.js"></script> nope -->
     <script src="/client/js/js.cookie.min.js"></script>
     <script src="/client/js/jquery-3.3.1.min.js"></script>
     <title>76692 Inventory</title>
@@ -104,13 +104,15 @@
                 </div>
             </div>
 
+            <h6 class="py-2">Welcome <span id="username">...</span></h6>
 
+            <h2>Low Stock Items</h2>
 
-            <h2>New Items</h2>
-            <canvas width="400px" height="2px"></canvas>
-            <h6>Welcome <span id="username">...</span></h6>
-            <canvas width="400px" height="2px"></canvas>
-            <div id="inventory"></div>
+            <div class="py-2" id="runninglow"></div>
+
+            <h2>Newest Items</h2>
+
+            <div class="py-2" id="inventory"></div>
 
         </main>
     </div>
