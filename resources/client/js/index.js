@@ -21,7 +21,9 @@ function updateInventory() {
                     + `<div class="col-3 bg-light font-weight-bold">Image</div>`
                     + `</div>`;
 
-                for (let product of inventoryList) {
+                let sortedInventoryList = inventoryList.sort((a, b) => b.productid - a.productid);
+
+                for (let product of sortedInventoryList) {
                     inventoryHTML += `<div class="row mb-2">`
                         + `<div class="col-3">${product.productname}</div>`
                         + `<div class="col-4">${product.productdescription}</div>`
