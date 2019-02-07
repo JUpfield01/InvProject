@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserService {
 
-    public static String validateSessionCookie(Cookie sessionCookie) {
+    public static User validateSessionCookie(Cookie sessionCookie) {
         if (sessionCookie != null) {
             String token = sessionCookie.getValue();
             String result = UserService.selectAllInto(User.users);
@@ -20,7 +20,7 @@ public class UserService {
                 for (User u : User.users) {
                     if (u.getSessionToken().equals(token)) {
                         Logger.log("Valid session token received.");
-                        return u.getUsername();
+                        return u;
                     }
                 }
             }

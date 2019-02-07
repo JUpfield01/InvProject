@@ -23,7 +23,7 @@ public class InventoryController {
     @Produces(MediaType.APPLICATION_JSON)
     public String listInventory(@PathParam("id") int userId) {
 
-        Logger.log("/inventory/list/{id} - Getting all products from database for user");
+        Logger.log("/inventory/list/{id} - Getting all products from database for user " + userId);
         String status = InventoryService.selectAllInto(Inventory.inventorys);
 
         if (status.equals("OK")) {

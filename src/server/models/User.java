@@ -1,7 +1,10 @@
 package server.models;
 
 import org.json.simple.JSONObject;
+import server.Logger;
+import server.models.services.UserService;
 
+import javax.ws.rs.core.Cookie;
 import java.util.ArrayList;
 
 public class User {
@@ -75,4 +78,5 @@ public class User {
 
         return j;
     }
+
 }

@@ -3,13 +3,15 @@ package server.controllers;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import server.Logger;
+import server.models.Inventory;
 import server.models.Product;
+import server.models.User;
+import server.models.services.InventoryService;
 import server.models.services.ProductService;
+import server.models.services.UserService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.io.Console;
 
@@ -79,6 +81,50 @@ public class ProductController {
         }
 
     }
+
+    @POST
+    @Path("save/{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String saveGame(  @PathParam("id") int id,
+                             @FormParam("productname") String name,
+                             @FormParam("description") String description,
+                             @FormParam("price") Float price,
+                             @FormParam("quantity") int quantity,
+                             @FormParam("image") String image,
+                             @CookieParam("sessionToken") Cookie sessionCookie) {
+
+        User currentUser = UserService.validateSessionCookie(sessionCookie);
+        if (currentUser == null) return "Error: Invalid user session token";
+
+        if (id == -1) {
+            ProductService.selectAllInto(Product.products);
+            id = Product.nextId();
+            Product newProduct = new Product(id, 0, name, description, price, quantity, image);
+
+            Inventory newInventory = new Inventory(id, currentUser.getId());
+            InventoryService.insert(newInventory);
+
+            return ProductService.insert(newProduct);
+
+        } else {
+
+            Product existingProduct = ProductService.selectById(id);
+            if (existingProduct == null) {
+                return "That product doesn't appear to exist";
+            } else {
+                existingProduct.setProductname(name);
+                existingProduct.setProductdescription(description);
+                existingProduct.setProductcost(price);
+                existingProduct.setQuantity(quantity);
+                existingProduct.setImageurl(image);
+                return ProductService.update(existingProduct);
+            }
+
+        }
+    }
+
+
 }
 
 
