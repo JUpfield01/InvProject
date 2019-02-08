@@ -1,6 +1,6 @@
 function displayLowestThree(list) {
 
-    let sortedList = list.sort((a, b) => b.quantity - a.quantity);
+    let sortedList = list.sort((a, b) => a.quantity - b.quantity);
 
     let topThree = ['N/A', 'N/A', 'N/A'];
 
