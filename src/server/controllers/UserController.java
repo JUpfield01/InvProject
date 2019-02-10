@@ -80,5 +80,26 @@ public class UserController {
         }
     }
 
-}
+
+        @POST
+        @Path("updateUser/{id}")
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+        @Produces(MediaType.TEXT_PLAIN)
+        public String saveUsername(@PathParam("id") int id,
+        @FormParam("Username") String username,
+        @CookieParam("sessionToken") Cookie sessionCookie) {
+
+            User currentUser = UserService.validateSessionCookie(sessionCookie);
+            if (currentUser == null) return "Error: Invalid user session token";
+
+                User existingUser = UserService.selectById(id);
+                if (existingUser == null) {
+                    return "User doesn't appear to exist";
+                } else {
+                    existingUser.setUsername(username);
+                    return UserService.update(existingUser);
+                }
+
+            }
+        }
 

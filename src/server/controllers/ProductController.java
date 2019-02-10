@@ -13,7 +13,6 @@ import server.models.services.UserService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
-import java.io.Console;
 
 @SuppressWarnings("unchecked")
 @Path("product/")
@@ -30,7 +29,7 @@ public class ProductController {
         if (status.equals("OK")) {
 
             JSONArray productList = new JSONArray();
-            for (Product c: Product.products) {
+            for (Product c : Product.products) {
 
                 System.out.println(c.getProductid());
                 System.out.println(c.getImageurl());
@@ -56,13 +55,12 @@ public class ProductController {
     }
 
 
-
     @GET
     @Path("get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getConsole(@PathParam("id") int id) {
 
-        Logger.log("/product/get/"+ id + " - Getting product details from database");
+        Logger.log("/product/get/" + id + " - Getting product details from database");
 
         Product c = ProductService.selectById(id);
         if (c != null) {
@@ -86,13 +84,13 @@ public class ProductController {
     @Path("save/{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public String saveGame(  @PathParam("id") int id,
-                             @FormParam("productname") String name,
-                             @FormParam("description") String description,
-                             @FormParam("price") Float price,
-                             @FormParam("quantity") int quantity,
-                             @FormParam("image") String image,
-                             @CookieParam("sessionToken") Cookie sessionCookie) {
+    public String saveProduct(@PathParam("id") int id,
+                              @FormParam("productname") String name,
+                              @FormParam("description") String description,
+                              @FormParam("price") Float price,
+                              @FormParam("quantity") int quantity,
+                              @FormParam("image") String image,
+                              @CookieParam("sessionToken") Cookie sessionCookie) {
 
         User currentUser = UserService.validateSessionCookie(sessionCookie);
         if (currentUser == null) return "Error: Invalid user session token";
@@ -124,7 +122,25 @@ public class ProductController {
         }
     }
 
+    @POST
+    @Path("delete/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String deleteConsole(@PathParam("id") int id,
+                                @CookieParam("sessionToken") Cookie sessionCookie) {
+
+        User currentUser = UserService.validateSessionCookie(sessionCookie);
+        if (currentUser == null) return "Error: Invalid user session token";
+
+        Logger.log("/products/delete - Product " + id);
+        Product product = ProductService.selectById(id);
+        if (product == null) {
+            return "That product doesn't appear to exist";
+        } else {
+            ProductService.deleteById(id);
+            return InventoryService.deleteById(id);
+        }
+    }
+
 
 }
-
 

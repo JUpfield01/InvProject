@@ -4,12 +4,6 @@ function pageLoad() {
 
     let lastPage =  Cookies.get("breadcrumb");
     $("#back").attr("href", lastPage);
-
-    let currentPage = window.location.href;
-    Cookies.set("destination", currentPage);
-
-    //checkLogin();
-
     $("#logout").click(event => {
         Cookies.remove("sessionToken");
         window.location.href = "/client/index.html";
@@ -24,11 +18,9 @@ function pageLoad() {
 
     if (id !== -1) {
         loadProduct();
-        //resetDeleteButton();
+        resetDeleteButton();
     }
-
     resetForm();
-
 }
 
 function resetForm() {
@@ -45,6 +37,7 @@ function resetForm() {
             success: response => {
                 if (response === 'OK') {
                     window.location.href = "/client/products.html";
+
                 } else {
                     alert(response);
                 }
@@ -74,5 +67,29 @@ function loadProduct() {
             }
         }
     });
+
+}
+
+function resetDeleteButton() {
+
+    $('#delete')
+        .css('visibility', 'visible')
+        .click(event => {
+                let r = confirm("Are you sure you want to delete this product?");
+                if (r === true) {
+                    $.ajax({
+                        url: '/product/delete/' + id,
+                        type: 'POST',
+                        success: response => {
+                            if (response === 'OK') {
+                                window.location.href = "/client/products.html";
+                            } else {
+                                alert(response);
+                            }
+                        }
+                    });
+                }
+            }
+        );
 
 }

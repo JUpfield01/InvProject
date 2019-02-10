@@ -33,7 +33,7 @@ function updateP(user) {
                         + `<div class="col-2"><a href="${product.imageurl}" target=”_blank”><img width="120" height="90" src="${product.imageurl}"></a></div>`
                         + `<div class="col-1 text-right">`
                         + `<a class="container-fluid"  href="/client/editproducts.html?id=${product.productid}">Edit</a>`
-
+                        +`</div>`
                         + `</div>`;
                 }
                 productHTML += `</div>`;

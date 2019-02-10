@@ -10,7 +10,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="/client/js/login.js"></script>
-    <script src="/client/js/index.js"></script>
+    <script src="/client/js/accountdetails.js"></script>
+    <script src="/client/js/js.cookie.min.js"></script>
+    <script src="/client/js/jquery-3.3.1.min.js"></script>
 
     <title>76692 Inventory</title>
 
@@ -77,12 +79,6 @@
                             Account Details <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/client/accountsettings.html">
-                            <span data-feather="file-text"></span>
-                            Account Settings
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -92,7 +88,69 @@
                 <h1 class="h2">Account Details</h1>
 
             </div>
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Username
+                            </button>
+                        </h5>
+                    </div>
 
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <form class="form-inline">
+                                <div class="form-group mb-2">
+                                    <label>Current Username:   <span class="px-2" id="username">...</span></label>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="userNameForm" class="sr-only">New Username</label>
+                                    <input type="text" class="form-control" id="userNameForm" placeholder="New Username">
+                                </div>
+                                <button onclick="updateUserName" class="btn btn-secondary mb-2">Change Username</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Password
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <form class="form-inline">
+                                <div class="form-group mb-2">
+                                    <label>Current Password:   <span class="px-2" id="password">...</span></label>
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="newPassword" class="sr-only">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" placeholder="New Password">
+                                </div>
+                                <button type="submit" class="btn btn-secondary mb-2">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                UserID
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            UserID
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         </div>
 </div>

@@ -11,6 +11,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="/client/js/login.js"></script>
     <script src="/client/js/index.js"></script>
+    <script src="/client/js/js.cookie.min.js"></script>
+    <script src="/client/js/jquery-3.3.1.min.js"></script>
 
     <title>76692 Inventory</title>
 
@@ -77,12 +79,6 @@
                             Account Details
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/client/accountsettings.html">
-                            <span data-feather="file-text"></span>
-                            Account Settings
-                        </a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -93,6 +89,17 @@
 
             </div>
 
+            <div class="dropdown">
+                <h2 class="h6">Display on Dashboard</h2>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Lowest Stock Products
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Lowest Stock products</a>
+                    <a class="dropdown-item" href="#">Out Of Stock products</a>
+                    <a class="dropdown-item" href="#">Random products</a>
+                </div>
+            </div>
         </main>
     </div>
 </div>
