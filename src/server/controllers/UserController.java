@@ -21,7 +21,7 @@ public class UserController {
                              @FormParam("password2") String password2) {
         Logger.log("/user/new - Creating " + username);
         UserService.selectAllInto(User.users);
-        for (User u: User.users) {
+        for (User u : User.users) {
             if (u.getUsername().toLowerCase().equals(username.toLowerCase())) {
                 return "Error: Username already exists";
             }
@@ -44,11 +44,11 @@ public class UserController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public String newMessage(@FormParam("username") String username,
-                             @FormParam("password") String password ) {
+                             @FormParam("password") String password) {
 
         Logger.log("/user/login - Attempt by " + username);
         UserService.selectAllInto(User.users);
-        for (User u: User.users) {
+        for (User u : User.users) {
             if (u.getUsername().toLowerCase().equals(username.toLowerCase())) {
                 if (!u.getPassword().equals(password)) {
                     return "Error: Incorrect password";
@@ -81,25 +81,48 @@ public class UserController {
     }
 
 
-        @POST
-        @Path("updateUser/{id}")
-        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-        @Produces(MediaType.TEXT_PLAIN)
-        public String saveUsername(@PathParam("id") int id,
-        @FormParam("Username") String username,
-        @CookieParam("sessionToken") Cookie sessionCookie) {
+    @POST
+    @Path("updateUser/{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String saveUsername(@PathParam("id") int id,
+                               @FormParam("username") String username,
+                               @CookieParam("sessionToken") Cookie sessionCookie) {
 
-            User currentUser = UserService.validateSessionCookie(sessionCookie);
-            if (currentUser == null) return "Error: Invalid user session token";
+        User currentUser = UserService.validateSessionCookie(sessionCookie);
+        if (currentUser == null) return "Error: Invalid user session token";
 
-                User existingUser = UserService.selectById(id);
-                if (existingUser == null) {
-                    return "User doesn't appear to exist";
-                } else {
-                    existingUser.setUsername(username);
-                    return UserService.update(existingUser);
-                }
-
-            }
+        User existingUser = UserService.selectById(id);
+        if (existingUser == null) {
+            return "User doesn't appear to exist";
+        } else {
+            existingUser.setUsername(username);
+            return UserService.update(existingUser);
         }
+
+    }
+
+    @POST
+    @Path("updatePassword/{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String savePassword(@PathParam("id") int id,
+                               @FormParam("password") String password,
+                               @CookieParam("sessionToken") Cookie sessionCookie) {
+
+        User currentUser = UserService.validateSessionCookie(sessionCookie);
+        if (currentUser == null) return "Error: Invalid user session token";
+
+        User existingUser = UserService.selectById(id);
+        if (existingUser == null) {
+            return "User doesn't appear to exist";
+        } else {
+            existingUser.setPassword(password);
+            return UserService.update(existingUser);
+        }
+
+    }
+
+
+}
 

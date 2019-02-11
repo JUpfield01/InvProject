@@ -33,12 +33,13 @@
         </li>
     </ul>
 </nav>
-<body onload="pageLoad()">
+<body onload="accountDetailsPageLoad()">
 //nav menu
 <div class="container-fluid">
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
+                <ul class="nav flex-column">
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">
@@ -65,7 +66,7 @@
                         </a>
                     </li>
                 </ul>
-
+                </ul>
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                     <span>Account</span>
                     <a class="d-flex align-items-center text-muted" href="#">
@@ -100,15 +101,14 @@
 
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            <form class="form-inline">
+                            <form class="form-inline" id="userNameForm">
                                 <div class="form-group mb-2">
                                     <label>Current Username:   <span class="px-2" id="username">...</span></label>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2">
-                                    <label for="userNameForm" class="sr-only">New Username</label>
-                                    <input type="text" class="form-control" id="userNameForm" placeholder="New Username">
+                                    <input type="text" class="form-control" id="userNameInput" name="username" placeholder="New Username">
                                 </div>
-                                <button onclick="updateUserName" class="btn btn-secondary mb-2">Change Username</button>
+                                <input class="btn btn-secondary mb-2" type="submit" value="Change Username">
                             </form>
                         </div>
                     </div>
@@ -123,15 +123,12 @@
                     </div>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                         <div class="card-body">
-                            <form class="form-inline">
-                                <div class="form-group mb-2">
-                                    <label>Current Password:   <span class="px-2" id="password">...</span></label>
-                                </div>
+                            <form class="form-inline" id="userPasswordForm">
                                 <div class="form-group mx-sm-3 mb-2">
                                     <label for="newPassword" class="sr-only">New Password</label>
-                                    <input type="password" class="form-control" id="newPassword" placeholder="New Password">
+                                    <input type="text" class="form-control" id="newPassword" name="password" placeholder="New Password">
                                 </div>
-                                <button type="submit" class="btn btn-secondary mb-2">Change Password</button>
+                                <input class="btn btn-secondary mb-2" type="submit" value="Change Password">
                             </form>
                         </div>
                     </div>
@@ -146,7 +143,7 @@
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                         <div class="card-body">
-                            UserID
+                            <label>User ID:   <span class="px-2" id="userid">...</span></label>
                         </div>
                     </div>
                 </div>

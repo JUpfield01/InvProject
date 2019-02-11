@@ -1,3 +1,5 @@
+let id = -1;
+
 function checkLogin() {
 
     console.log("Invoked checkLogin()");
@@ -15,7 +17,10 @@ function checkLogin() {
                 if (user === "") {
                     window.location.href = "/client/login.html";
                 } else {
+                    id = user.id;
                     $("#username").html(user.username);
+                    $("#password").html(user.password);
+                    $("#userid").html(user.id);
                 }
             }
         });
@@ -27,19 +32,25 @@ function logout() {
     window.location.href = "/client/login.html";
 }
 
-function pageLoad() {
+function accountDetailsPageLoad() {
 
     checkLogin();
+    prepareUpdateUserNameForm();
+    prepareUpdatePasswordForm();
 
 }
 
-function updatePassword(){
-    const form = $('#passwordForm');
-
+function prepareUpdatePasswordForm(){
+    console.log("Preparing password form...");
+    const form = $('#userPasswordForm');
     form.unbind("submit");
     form.submit(event => {
-        $ajax({
-            url: '/user/save/' + id,
+        event.preventDefault();
+        if (id === -1) {
+            alert("Error: Failed to establish user!");
+        }
+        $.ajax({
+            url: '/user/updatePassword/' + id,
             type: 'POST',
             data: form.serialize(),
             success: response => {
@@ -53,13 +64,17 @@ function updatePassword(){
     });
 }
 
-function updateUserName(){
+function prepareUpdateUserNameForm(){
+    console.log("Preparing username form...");
     const form = $('#userNameForm');
-    console.log("Invoked user()");
     form.unbind("submit");
     form.submit(event => {
-        $ajax({
-            url: '/updateUser/save/' + id,
+        event.preventDefault();
+        if (id === -1) {
+            alert("Error: Failed to establish user!");
+        }
+        $.ajax({
+            url: '/user/updateUser/' + id,
             type: 'POST',
             data: form.serialize(),
             success: response => {
